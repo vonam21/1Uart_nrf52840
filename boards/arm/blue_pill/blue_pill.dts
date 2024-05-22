@@ -1,0 +1,66 @@
+/*
+ * Copyright (c) 2023 Quasal
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/dts-v1/;
+#include <st/f1/stm32f103c(8-b)tx-pinctrl.dtsi>
+#include <st/f1/stm32f103X8.dtsi>
+
+/ {
+    model = "blue_pill";
+    compatible = "st,stm32f103";
+
+    chosen {
+        zephyr,sram = &sram0;
+        zephyr,flash = &flash0;
+    };
+
+    aliases {
+        uart-tutorial = &usart1;
+    };
+
+    leds {
+        compatible = "gpio-leds";
+
+        led_1: led {
+            gpios = <&gpioc 13 GPIO_ACTIVE_LOW>;
+            label = "User LED0";
+        };
+    };
+};
+
+&clk_hse {
+    clock-frequency = <DT_FREQ_M(8)>;
+    status = "okay";
+};
+
+&pll {
+    mul = <9>;
+    clocks = <&clk_hse>;
+    status = "okay";
+};
+
+&rcc {
+    clocks = <&pll>;
+    clock-frequency = <DT_FREQ_M(72)>;
+    ahb-prescaler = <1>;
+    apb1-prescaler = <2>;
+    apb2-prescaler = <1>;
+    status = "okay";
+};
+
+&usart1 {
+    pinctrl-0 = <&usart1_tx_pa9 &usart1_rx_pa10>;
+    pinctrl-names = "default";
+    current-speed = <115200>;
+    status = "okay";
+};
+
+&gpioc {
+    status = "okay";
+};
+&gpioa {
+    status = "okay";
+};

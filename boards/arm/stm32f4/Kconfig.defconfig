@@ -1,0 +1,10 @@
+# Copyright (c) 2023 Quasal
+# SPDX-License-Identifier: Apache-2.0
+
+if BOARD_STM32F4
+
+config BOARD
+    default "stm32f4"
+
+endif # BOARD_STM32F4
+

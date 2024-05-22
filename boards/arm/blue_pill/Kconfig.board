@@ -1,0 +1,6 @@
+# Copyright (c) 2023 Quasal
+# SPDX-License-Identifier: Apache-2.0
+
+config BOARD_STM32F1
+    bool "blue_pill"
+    depends on SOC_STM32F103XE

@@ -1,0 +1,98 @@
+/*
+ * Copyright (c) 2023 Quasal
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/dts-v1/;
+#include <st/f4/stm32f411v(c-e)tx-pinctrl.dtsi>
+#include <st/f4/stm32f411Xe.dtsi>
+/ {
+    model = "stm32f4";
+    compatible = "st,stm32f411";
+
+    chosen {
+        zephyr,sram = &sram0;
+        zephyr,flash = &flash0;
+        zephyr,console = &usart2;
+    };
+
+    aliases {
+        uart-tutorial = &usart1;
+    };
+    den_led {
+        compatible = "gpio-leds";
+
+        led_1: led1 {
+            gpios = <&gpiod 13 GPIO_ACTIVE_HIGH>;
+            label = "User LED0";
+        };
+        led_2: led2 {
+            gpios = <&gpiod 12 GPIO_ACTIVE_HIGH>;
+            label = "User LED0";
+        };
+        led_3: led3 {
+            gpios = <&gpiod 15 GPIO_ACTIVE_HIGH>;
+            label = "User LED0";
+        };
+    };
+     buttons {
+        compatible = "gpio-keys";
+
+        user_button: button {
+            label = "User";
+            gpios = <&gpioa 0 GPIO_ACTIVE_LOW>;
+        };
+    };
+};
+
+&clk_hse {
+    clock-frequency = <DT_FREQ_M(8)>;
+    status = "okay";
+};
+
+&pll {
+    div-m = <4>;
+    mul-n = <100>;
+    div-p = <2>;
+    div-q = <4>;
+    clocks = <&clk_hse>;
+    status = "okay";
+};
+
+&rcc {
+    clocks = <&pll>;
+    clock-frequency = <DT_FREQ_M(100)>;                                                                                                                                                                                   
+    ahb-prescaler = <1>;
+    apb1-prescaler = <2>;
+    apb2-prescaler = <1>;
+};
+
+&usart1 {
+    pinctrl-0 = <&usart1_tx_pa15 &usart1_rx_pb7>;
+    pinctrl-names = "default";
+    current-speed = <115200>;
+    status = "okay";
+};
+
+&usart2 {
+    pinctrl-0 = <&usart2_tx_pa2 &usart2_rx_pa3>;
+    pinctrl-names = "default";
+    current-speed = <115200>;
+    status = "okay";
+};
+
+
+&gpiod {
+    status = "okay";
+};
+&gpioc {
+    status = "okay";
+};
+
+&gpioa {
+    status = "okay";
+};
+&gpiob {
+    status = "okay";
+};
